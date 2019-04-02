@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-
+import { Link } from '@reach/router';
 import GetAllArticles from '../Components/GetAllArticles';
 
 
@@ -14,6 +14,7 @@ class HomeView extends Component {
 render () {
   return(
     <div className="HomeView">
+   
  
           
       <label>sort by</label>
@@ -49,7 +50,6 @@ componentDidMount = () => {
 
   changeSorting = (event) => {
     event.preventDefault()
-    console.log('hello')
     if (event.target.value !== this.state.sortBy){
       this.setState({sortBy: event.target.value})
     }
@@ -62,5 +62,6 @@ componentDidMount = () => {
     }
     }
 }
+
 
 export default HomeView;

@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import { Link } from '@reach/router';
 
-class GetAllArticles extends Component {
+class GetAllCommentsById extends Component {
   state = { 
-    article_id: null,
-    individualArticle: null,
+   Comments: [],
    
 
   }
@@ -29,9 +28,8 @@ class GetAllArticles extends Component {
         e.preventDefault();
        
         
-        
-        
-        Axios.get(`https://longlandncknews.herokuapp.com/api/articles/${e.target.value}`)
+ 
+        Axios.get(`https://longlandncknews.herokuapp.com/api/articles/${e.target.value}/comments`)
         .then(res => {
           let individualarticle = res.data
           this.setState({individualArticle: res.data.article}, () => console.log(this.state))
@@ -40,20 +38,5 @@ class GetAllArticles extends Component {
     }
       
 
-export default GetAllArticles;
+export default GetAllCommentsById;
 
-
-
-// const clicker = (e) => {
-//   e.preventDefault();
-//   console.log('The link was clicked.', e.target.value);
-//   fetchArticle(e.target.Value)
-// }
-//     const fetcharticle = (selectedId) => {
-//       Axios.get(`https://longlandncknews.herokuapp.com/api/articles/${selectedId}`)
-//       .then(res => {
-//         let individualarticle = res.data
-//         console.log(individualarticle)
-//         // this.setState({blockList: res.data.blocks})
-//       })
-//     }
