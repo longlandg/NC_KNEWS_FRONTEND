@@ -8,6 +8,7 @@ import { Link } from '@reach/router';
 
 import HomeView from './PageViews/HomeView';
 import SingleArticleView from './PageViews/SingleArticleView';
+import PostCommentView from './PageViews/PostCommentView';
 
 class App extends Component {
   state = {
@@ -24,6 +25,7 @@ class App extends Component {
         <Router>
                 <HomeView path='/'/>
                 <SingleArticleView path='/articles/:article_id'/>
+                <PostCommentView article_id={this.state.article_id} userName={this.state.userName} path='/articles/:article_id/postcomment'/>
                 </Router>
            </div>
     )
@@ -33,6 +35,7 @@ class App extends Component {
 const Nav = () => {
   return <nav>
     <Link to='/'><button>Home</button></Link>
+    <Link to='/articles/:article_id/postcomment'><button>posty</button></Link>
    
    
   </nav>

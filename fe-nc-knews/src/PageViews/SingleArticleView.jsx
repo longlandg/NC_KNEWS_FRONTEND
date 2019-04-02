@@ -18,7 +18,7 @@ render () {
             <p>Topic:{this.state.individualArticle.topic}</p>
             <p>{this.state.individualArticle.body}</p>
             <p>Votes:{this.state.individualArticle.votes}</p>
-            <Link to={`/api/articles/${this.state.individualArticlearticle_id}/postcomment`} ><button>post comment</button></Link>
+            <Link to={`/api/articles/${this.state.individualArticle.article_id}/postcomment`} ><button>post comment</button></Link>
               </div>}
              
              {this.state.allComments && <div>
