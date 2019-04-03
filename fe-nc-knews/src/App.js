@@ -13,7 +13,7 @@ import UserPageView from "./PageViews/UserPageView";
 class App extends Component {
   state = {
     userLoggedIn: true,
-    userName: "jessjelly"
+    userName: "tickle122"
   };
 
   render = () => {
@@ -23,7 +23,10 @@ class App extends Component {
         <Nav userName={this.state.userName} />
         <Router>
           <HomeView path="/" />
-          <SingleArticleView path="/articles/:article_id" />
+          <SingleArticleView
+            userName={this.state.userName}
+            path="/articles/:article_id"
+          />
           <UserPageView
             userName={this.state.userName}
             path="/users/:username"

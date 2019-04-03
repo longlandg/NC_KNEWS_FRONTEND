@@ -34,13 +34,35 @@ class SingleArticleView extends Component {
           <div>
             <ul>
               {this.state.allComments.map(comment => {
-                const { votes, comment_id, created_at, author, body } = comment;
+                const {
+                  votes,
+                  comments_id,
+                  created_at,
+                  author,
+                  body
+                } = comment;
                 return (
-                  <li key={comment_id}>
+                  <li key={comments_id}>
                     <h4>Author: {author}</h4>
                     <p> Date Posted: {created_at}</p>
+                    <p> Date Posted: {comments_id}</p>
                     <p>{body}</p>
                     <p>Votes: {votes}</p>
+
+                    <button
+                      disabled={comment.author !== this.props.userName}
+                      onClick={() => {
+                        Axios.delete(
+                          `https://longlandncknews.herokuapp.com/api/comments/${comments_id}`
+                        ).then(res => {
+                          console.log(res);
+                          console.log(res.data);
+                        });
+                        console.log("this is the click", comments_id);
+                      }}
+                    >
+                      delete comment
+                    </button>
                   </li>
                 );
               })}
@@ -54,6 +76,12 @@ class SingleArticleView extends Component {
   componentDidMount = () => {
     this.fetchSingleArticle();
     this.fetchAllCommentsByArticleId();
+  };
+
+  componentDidUpdate = (_, prevState) => {
+    if (this.state.allComments !== prevState.allComments) {
+      this.fetchAllCommentsByArticleId();
+    }
   };
 
   fetchSingleArticle = () => {
