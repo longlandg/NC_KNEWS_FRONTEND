@@ -3,24 +3,31 @@ import "./App.css";
 import { Router } from "@reach/router";
 import { Link } from "@reach/router";
 
+import Nav from "./Components/Nav";
+
 import HomeView from "./PageViews/HomeView";
 import SingleArticleView from "./PageViews/SingleArticleView";
 import PostCommentView from "./PageViews/PostCommentView";
+import UserPageView from "./PageViews/UserPageView";
 
 class App extends Component {
   state = {
     userLoggedIn: true,
-    userName: "weegembump"
+    userName: "jessjelly"
   };
 
-  render() {
+  render = () => {
     return (
       <div className="App">
         <h1 className="title">NC KNEWS</h1>
-        <Nav />
+        <Nav userName={this.state.userName} />
         <Router>
           <HomeView path="/" />
           <SingleArticleView path="/articles/:article_id" />
+          <UserPageView
+            userName={this.state.userName}
+            path="/users/:username"
+          />
           <PostCommentView
             article_id={this.state.article_id}
             userName={this.state.userName}
@@ -29,17 +36,7 @@ class App extends Component {
         </Router>
       </div>
     );
-  }
+  };
 }
-
-const Nav = () => {
-  return (
-    <nav>
-      <Link to="/">
-        <button>Home</button>
-      </Link>
-    </nav>
-  );
-};
 
 export default App;
