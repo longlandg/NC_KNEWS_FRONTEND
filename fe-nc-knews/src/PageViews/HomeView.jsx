@@ -7,7 +7,8 @@ import { fetchAllArticles } from "../Components/apis";
 class HomeView extends Component {
   state = {
     allArticles: null,
-    sortBy: ""
+    sortBy: "",
+    filterBy: ""
   };
 
   render() {
@@ -66,15 +67,11 @@ class HomeView extends Component {
 
   componentDidUpdate = (_, prevState) => {
     if (this.state.sortBy !== prevState.sortBy) {
-      this.fetchAllArticles();
-      console.log("this is the didupdate", this.state);
-    }
-  };
-
-  componentDidUpdate = (_, prevState) => {
-    if (this.state.sortBy !== prevState.sortBy) {
-      this.fetchAllArticles();
-      console.log("this is the didupdate", this.state);
+      Promise.resolve(
+        fetchAllArticles(this.state.sortBy).then(articles => {
+          this.setState({ allArticles: articles });
+        })
+      );
     }
   };
 }

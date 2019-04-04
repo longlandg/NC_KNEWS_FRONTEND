@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { Link } from "@reach/router";
-import { updateArticleVotes } from "../Components/apis";
+import { updateArticleVotes, fetchSingleArticle } from "../Components/apis";
 class SingleArticleView extends Component {
   state = {
     individualArticle: null,
@@ -26,6 +26,11 @@ class SingleArticleView extends Component {
             >
               <button>post comment</button>
             </Link>
+
+            <Link to={`/articles`}>
+              <button>read more articles like this</button>
+            </Link>
+
             <button onClick={() => this.handleVoteClick(1)}>vote up</button>
             <span>
               {" "}
@@ -84,10 +89,17 @@ class SingleArticleView extends Component {
       return { voteChange: state.voteChange + numberOfVotes };
     });
   };
+  // componentDidMount = () => {
+  //   Promise.resolve(
+  //     fetchAllArticles(this.state.sortBy).then(articles => {
+  //       this.setState({ allArticles: articles });
+  //     })
+  //   );
+  // };
 
   componentDidMount = () => {
     this.fetchSingleArticle();
-    this.fetchAllCommentsByArticleId();
+    // this.fetchAllCommentsByArticleId();
   };
 
   // componentDidUpdate = (_, prevState) => {

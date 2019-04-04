@@ -4,7 +4,7 @@ export const fetchAllArticles = async sortBy => {
   const { data, status } = await Axios.get(
     `https://longlandncknews.herokuapp.com/api/articles?${sortBy}`
   );
-  // console.log("hello im in the function", data.articles);
+  console.log("hello im in the function", data.articles);
   return data.articles;
 };
 
@@ -23,6 +23,29 @@ export const updateArticleVotes = (direction, article_id) => {
   );
 };
 
+export const fetchSingleArticle = async article_id => {
+  const { data, status } = await Axios.get(
+    `https://longlandncknews.herokuapp.com/api/articles/${article_id}`
+  );
+  console.log("hello im in the fetchsinglearticle function", data);
+  return data;
+};
+
+export const fetchAllCommentsByArticleId = async article_id => {
+  const { data, status } = await Axios.get(
+    `https://longlandncknews.herokuapp.com/api/articles/${article_id}/comments`
+  );
+  console.log("hello im in the fetchAllCommentsByArticleId function", data);
+  return data;
+};
+
+// fetchAllCommentsByArticleId = () => {
+//   Axios.get(
+//     `https://longlandncknews.herokuapp.com/api/articles/${
+//       this.props.article_id
+//     }/comments`
+//   ).then(res => this.setState({ allComments: res.data.comments }));
+// };
 // export const postNewComment
 
 // fetchAllArticles = () => {
@@ -52,4 +75,4 @@ export const updateArticleVotes = (direction, article_id) => {
 // };
 // }
 
-export default { fetchAllArticles, fetchUserInfo };
+export default { fetchAllArticles, fetchUserInfo, fetchSingleArticle };

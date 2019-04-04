@@ -55,6 +55,7 @@ class userPageView extends Component {
                           `https://longlandncknews.herokuapp.com/api/articles/${article_id}`
                         ).then(res => {
                           console.log(res);
+                          this.userArticles();
                           // this.setState({ articleDeleted: true });
                           // console.log(res.data);
                           // this.userArticles();

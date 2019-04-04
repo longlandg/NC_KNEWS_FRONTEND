@@ -23,16 +23,14 @@ class PostArticleView extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log("this is the state", this.state);
+
     const newArticle = this.state;
     newArticle.username = this.props.userName;
-    console.log(newArticle);
+
     axios
       .post(`https://longlandncknews.herokuapp.com/api/articles`, newArticle)
       .then(res => {
         navigate(`/users/${this.props.userName}`);
-        console.log("this.is the res", res);
-        console.log("this is the res.data", res.data);
       });
   };
   render() {
