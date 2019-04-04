@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { Link } from "@reach/router";
-
+import { updateArticleVotes } from "../Components/apis";
 class SingleArticleView extends Component {
   state = {
     individualArticle: null,
-    allComments: null
+    allComments: null,
+    voteChange: 0
   };
 
   render() {
@@ -18,7 +19,6 @@ class SingleArticleView extends Component {
             <p>Posted:{this.state.individualArticle.created_at}</p>
             <p>Topic:{this.state.individualArticle.topic}</p>
             <p>{this.state.individualArticle.body}</p>
-            <p>Votes:{this.state.individualArticle.votes}</p>
             <Link
               to={`/articles/${
                 this.state.individualArticle.article_id
@@ -26,6 +26,13 @@ class SingleArticleView extends Component {
             >
               <button>post comment</button>
             </Link>
+            <button onClick={() => this.handleVoteClick(1)}>vote up</button>
+            <span>
+              {" "}
+              total votes:{" "}
+              {this.state.individualArticle.votes + this.state.voteChange}
+            </span>
+            <button onClick={() => this.handleVoteClick(-1)}>vote down</button>
             {/* <Link to={`/api/articles/${this.state.individualArticle.article_id}/postcomment`} ><button>post comment</button></Link> */}
           </div>
         )}
@@ -45,7 +52,7 @@ class SingleArticleView extends Component {
                   <li key={comments_id}>
                     <h4>Author: {author}</h4>
                     <p> Date Posted: {created_at}</p>
-                    <p> Date Posted: {comments_id}</p>
+                    <p> Comment Id: {comments_id}</p>
                     <p>{body}</p>
                     <p>Votes: {votes}</p>
 
@@ -55,10 +62,8 @@ class SingleArticleView extends Component {
                         Axios.delete(
                           `https://longlandncknews.herokuapp.com/api/comments/${comments_id}`
                         ).then(res => {
-                          console.log(res);
-                          console.log(res.data);
+                          this.fetchAllCommentsByArticleId();
                         });
-                        console.log("this is the click", comments_id);
                       }}
                     >
                       delete comment
@@ -73,16 +78,25 @@ class SingleArticleView extends Component {
     );
   }
 
+  handleVoteClick = numberOfVotes => {
+    updateArticleVotes(numberOfVotes, this.props.article_id);
+    this.setState(state => {
+      return { voteChange: state.voteChange + numberOfVotes };
+    });
+  };
+
   componentDidMount = () => {
     this.fetchSingleArticle();
     this.fetchAllCommentsByArticleId();
   };
 
-  componentDidUpdate = (_, prevState) => {
-    if (this.state.allComments !== prevState.allComments) {
-      this.fetchAllCommentsByArticleId();
-    }
-  };
+  // componentDidUpdate = (_, prevState) => {
+  //   if (this.state.allComments !== prevState.allComments) {
+  //     console.log("hello");
+  //     this.fetchSingleArticle();
+  //     this.fetchAllCommentsByArticleId();
+  //   }
+  // };
 
   fetchSingleArticle = () => {
     Axios.get(

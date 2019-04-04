@@ -9,11 +9,12 @@ import HomeView from "./PageViews/HomeView";
 import SingleArticleView from "./PageViews/SingleArticleView";
 import PostCommentView from "./PageViews/PostCommentView";
 import UserPageView from "./PageViews/UserPageView";
+import PostArticleView from "./PageViews/PostArticleView";
 
 class App extends Component {
   state = {
     userLoggedIn: true,
-    userName: "tickle122"
+    userName: "weegembump"
   };
 
   render = () => {
@@ -35,6 +36,10 @@ class App extends Component {
             article_id={this.state.article_id}
             userName={this.state.userName}
             path="/articles/:article_id/postcomment"
+          />
+          <PostArticleView
+            userName={this.state.userName}
+            path="/articles/postarticle"
           />
         </Router>
       </div>

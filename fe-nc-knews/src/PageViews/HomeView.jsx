@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { Link } from "@reach/router";
-import GetAllArticles from "../Components/GetAllArticles";
+import AllArticles from "../Components/AllArticles";
+import { fetchAllArticles } from "../Components/apis";
 
 class HomeView extends Component {
   state = {
@@ -33,7 +34,7 @@ class HomeView extends Component {
         </select>
         {this.state.allArticles && (
           <div>
-            <GetAllArticles allArticles={this.state.allArticles} />
+            <AllArticles allArticles={this.state.allArticles} />
           </div>
         )}
       </div>
@@ -41,16 +42,20 @@ class HomeView extends Component {
   }
 
   componentDidMount = () => {
-    this.fetchAllArticles();
+    Promise.resolve(
+      fetchAllArticles(this.state.sortBy).then(articles => {
+        this.setState({ allArticles: articles });
+      })
+    );
   };
 
-  fetchAllArticles = () => {
-    Axios.get(
-      `https://longlandncknews.herokuapp.com/api/articles?${this.state.sortBy}`
-    ).then(res => {
-      this.setState({ allArticles: res.data.articles });
-    });
-  };
+  // fetchAllArticles = () => {
+  //   Axios.get(
+  //     `https://longlandncknews.herokuapp.com/api/articles?${this.state.sortBy}`
+  //   ).then(res => {
+  //     this.setState({ allArticles: res.data.articles });
+  //   });
+  // };
 
   changeSorting = event => {
     event.preventDefault();
@@ -62,6 +67,14 @@ class HomeView extends Component {
   componentDidUpdate = (_, prevState) => {
     if (this.state.sortBy !== prevState.sortBy) {
       this.fetchAllArticles();
+      console.log("this is the didupdate", this.state);
+    }
+  };
+
+  componentDidUpdate = (_, prevState) => {
+    if (this.state.sortBy !== prevState.sortBy) {
+      this.fetchAllArticles();
+      console.log("this is the didupdate", this.state);
     }
   };
 }
