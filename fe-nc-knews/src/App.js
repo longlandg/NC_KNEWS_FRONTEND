@@ -24,6 +24,8 @@ class App extends Component {
         <Nav userName={this.state.userName} />
         <Router>
           <HomeView path="/" />
+
+          {/* <SignInPage userName={this.state.userName} path="/user" /> */}
           <SingleArticleView
             userName={this.state.userName}
             path="/articles/:article_id"

@@ -50,14 +50,6 @@ class HomeView extends Component {
     );
   };
 
-  // fetchAllArticles = () => {
-  //   Axios.get(
-  //     `https://longlandncknews.herokuapp.com/api/articles?${this.state.sortBy}`
-  //   ).then(res => {
-  //     this.setState({ allArticles: res.data.articles });
-  //   });
-  // };
-
   changeSorting = event => {
     event.preventDefault();
     if (event.target.value !== this.state.sortBy) {

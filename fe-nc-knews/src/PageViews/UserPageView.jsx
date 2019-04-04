@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import Axios from "axios";
 import { Link, navigate } from "@reach/router";
 import { promises } from "fs";
-import { fetchUserInfo } from "../Components/apis";
+import {
+  fetchUserInfo,
+  fetchUserArticles,
+  deleteArticle
+} from "../Components/apis";
 
 class userPageView extends Component {
   state = {
@@ -28,7 +32,7 @@ class userPageView extends Component {
         {this.state.userArticles && (
           <div>
             <ul>
-              {this.state.userArticles.articles.map(article => {
+              {this.state.userArticles.map(article => {
                 const {
                   title,
                   topic,
@@ -51,16 +55,9 @@ class userPageView extends Component {
                     <button
                       disabled={article.author !== this.props.userName}
                       onClick={() => {
-                        Axios.delete(
-                          `https://longlandncknews.herokuapp.com/api/articles/${article_id}`
-                        ).then(res => {
-                          console.log(res);
-                          this.userArticles();
-                          // this.setState({ articleDeleted: true });
-                          // console.log(res.data);
-                          // this.userArticles();
+                        deleteArticle(article_id).then(res => {
+                          fetchUserArticles(this.props.userName);
                         });
-                        console.log("this is the article idclick", article_id);
                       }}
                     >
                       delete article
@@ -76,38 +73,21 @@ class userPageView extends Component {
   }
 
   componentDidMount = () => {
-    Promise.all([fetchUserInfo(this.props.userName), this.userArticles()]).then(
-      ([userInfo, userArticles]) => {
-        this.setState({ userInfo, userArticles });
-      }
-    );
+    Promise.all([
+      fetchUserInfo(this.props.userName),
+      fetchUserArticles(this.props.userName)
+    ]).then(([userInfo, userArticles]) => {
+      this.setState({ userInfo, userArticles });
+      console.log(this.state);
+    });
   };
 
   componentDidUpdate = (_, prevState) => {
-    if (this.state.articleDeleted === true) {
+    if (this.state !== prevState) {
       return ([articleDeleted, userArticles]) => {
         this.setState({ articleDeleted, userArticles });
       };
-
-      console.log("i updated");
     }
-  };
-
-  // userInfo = () => {
-  //   return Axios.get(
-  //     `https://longlandncknews.herokuapp.com/api/users/${this.props.userName}`
-  //   ).then(res => {
-  //     return res.data.user;
-  //   });
-  // };
-  userArticles = () => {
-    return Axios.get(
-      `https://longlandncknews.herokuapp.com/api/articles?author=${
-        this.props.userName
-      }`
-    ).then(res => {
-      return res.data;
-    });
   };
 }
 

@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link, navigate } from "@reach/router";
+import { postComment } from "../Components/apis";
 
-// class PostCommentView extends Component {
-//     state = {  value: '',
 class PostCommentView extends Component {
   state = {
-    username: this.props.userName,
+    // username: this.props.userName,
     body: ""
   };
 
@@ -17,18 +16,9 @@ class PostCommentView extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const newComment = this.state;
-    axios
-      .post(
-        `https://longlandncknews.herokuapp.com/api/articles/${
-          this.props.article_id
-        }/comments`,
-        newComment
-      )
-      .then(res => {
-        navigate(`/articles/${this.props.article_id}`);
-        console.log("this.is the res", res);
-        console.log("this is the res.data", res.data);
-      });
+    postComment(newComment, this.props.article_id).then(res => {
+      navigate(`/articles/${this.props.article_id}`);
+    });
   };
 
   render() {

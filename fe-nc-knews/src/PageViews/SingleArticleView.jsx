@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { Link } from "@reach/router";
-import { updateArticleVotes, fetchSingleArticle } from "../Components/apis";
+import {
+  deleteComment,
+  updateArticleVotes,
+  fetchSingleArticle,
+  fetchAllCommentsByArticleId
+} from "../Components/apis";
+
 class SingleArticleView extends Component {
   state = {
     individualArticle: null,
@@ -19,6 +25,7 @@ class SingleArticleView extends Component {
             <p>Posted:{this.state.individualArticle.created_at}</p>
             <p>Topic:{this.state.individualArticle.topic}</p>
             <p>{this.state.individualArticle.body}</p>
+
             <Link
               to={`/articles/${
                 this.state.individualArticle.article_id
@@ -64,10 +71,9 @@ class SingleArticleView extends Component {
                     <button
                       disabled={comment.author !== this.props.userName}
                       onClick={() => {
-                        Axios.delete(
-                          `https://longlandncknews.herokuapp.com/api/comments/${comments_id}`
-                        ).then(res => {
-                          this.fetchAllCommentsByArticleId();
+                        console.log("hi", comments_id, this.props.article_id);
+                        deleteComment(comments_id).then(res => {
+                          fetchAllCommentsByArticleId(this.props.article_id);
                         });
                       }}
                     >
@@ -89,41 +95,17 @@ class SingleArticleView extends Component {
       return { voteChange: state.voteChange + numberOfVotes };
     });
   };
-  // componentDidMount = () => {
-  //   Promise.resolve(
-  //     fetchAllArticles(this.state.sortBy).then(articles => {
-  //       this.setState({ allArticles: articles });
-  //     })
-  //   );
-  // };
 
   componentDidMount = () => {
-    this.fetchSingleArticle();
-    // this.fetchAllCommentsByArticleId();
-  };
-
-  // componentDidUpdate = (_, prevState) => {
-  //   if (this.state.allComments !== prevState.allComments) {
-  //     console.log("hello");
-  //     this.fetchSingleArticle();
-  //     this.fetchAllCommentsByArticleId();
-  //   }
-  // };
-
-  fetchSingleArticle = () => {
-    Axios.get(
-      `https://longlandncknews.herokuapp.com/api/articles/${
-        this.props.article_id
-      }`
-    ).then(res => this.setState({ individualArticle: res.data.article }));
-  };
-
-  fetchAllCommentsByArticleId = () => {
-    Axios.get(
-      `https://longlandncknews.herokuapp.com/api/articles/${
-        this.props.article_id
-      }/comments`
-    ).then(res => this.setState({ allComments: res.data.comments }));
+    // console.log("prop", this.state.individualArticle);
+    Promise.all([
+      fetchSingleArticle(this.props.article_id),
+      fetchAllCommentsByArticleId(this.props.article_id)
+    ]).then(([individualArticle, allComments]) => {
+      console.log("article", individualArticle);
+      console.log("all comments", allComments);
+      this.setState({ individualArticle, allComments });
+    });
   };
 }
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link, navigate } from "@reach/router";
+import { postArticle } from "../Components/apis";
 
 class PostArticleView extends Component {
   state = {
@@ -26,13 +27,17 @@ class PostArticleView extends Component {
 
     const newArticle = this.state;
     newArticle.username = this.props.userName;
-
-    axios
-      .post(`https://longlandncknews.herokuapp.com/api/articles`, newArticle)
-      .then(res => {
-        navigate(`/users/${this.props.userName}`);
-      });
+    postArticle(newArticle).then(res => {
+      navigate(`/users/${this.props.userName}`);
+    });
   };
+
+  //   axios
+  //     .post(`https://longlandncknews.herokuapp.com/api/articles`, newArticle)
+  //     .then(res => {
+  //       navigate(`/users/${this.props.userName}`);
+  //     });
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
