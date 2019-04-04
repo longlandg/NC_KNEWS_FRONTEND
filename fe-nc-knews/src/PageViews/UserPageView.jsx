@@ -78,7 +78,6 @@ class userPageView extends Component {
     Promise.all([fetchUserInfo(this.props.userName), this.userArticles()]).then(
       ([userInfo, userArticles]) => {
         this.setState({ userInfo, userArticles });
-        console.log("hi therestate", this.state);
       }
     );
   };
@@ -106,7 +105,6 @@ class userPageView extends Component {
         this.props.userName
       }`
     ).then(res => {
-      console.log(res.data);
       return res.data;
     });
   };

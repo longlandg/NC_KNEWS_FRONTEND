@@ -4,7 +4,7 @@ export const fetchAllArticles = async sortBy => {
   const { data, status } = await Axios.get(
     `https://longlandncknews.herokuapp.com/api/articles?${sortBy}`
   );
-  console.log("hello im in the function", data.articles);
+  // console.log("hello im in the function", data.articles);
   return data.articles;
 };
 
@@ -12,7 +12,7 @@ export const fetchUserInfo = async username => {
   const { data, status } = await Axios.get(
     `https://longlandncknews.herokuapp.com/api/users/${username}`
   );
-  console.log("hello im in the function", data.user);
+  // console.log("hello im in the function", data.user);
   return data.user;
 };
 

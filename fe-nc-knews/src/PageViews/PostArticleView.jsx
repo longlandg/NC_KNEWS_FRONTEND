@@ -1,35 +1,32 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link, navigate } from "@reach/router";
-import { promises } from "fs";
 
 class PostArticleView extends Component {
   state = {
     title: "",
     body: "",
-    topic: "",
-    username: this.props.userName
+    topic: ""
   };
 
   handleTitleChange = event => {
     this.setState({ title: event.target.value });
-    console.log(this.state.title);
   };
 
   handleTopicChange = event => {
     this.setState({ topic: event.target.value });
-    console.log(this.state.topic);
   };
 
   handleBodyChange = event => {
     this.setState({ body: event.target.value });
-    console.log(this.state.body);
   };
 
   handleSubmit = event => {
     event.preventDefault();
     console.log("this is the state", this.state);
     const newArticle = this.state;
+    newArticle.username = this.props.userName;
+    console.log(newArticle);
     axios
       .post(`https://longlandncknews.herokuapp.com/api/articles`, newArticle)
       .then(res => {
@@ -57,13 +54,11 @@ class PostArticleView extends Component {
             onChange={this.handleTopicChange}
           />
         </label>
+
         <label>
+          {" "}
           Body:
-          <input
-            type="textarea"
-            value={this.state.value}
-            onChange={this.handleBodyChange}
-          />
+          <textarea value={this.state.value} onChange={this.handleBodyChange} />
         </label>
         <input type="submit" value="post article" />
       </form>
