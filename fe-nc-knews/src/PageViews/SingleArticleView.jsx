@@ -34,7 +34,7 @@ class SingleArticleView extends Component {
               <button>post comment</button>
             </Link>
 
-            <Link to={`/articles`}>
+            <Link to={`/${this.state.individualArticle.topic}`}>
               <button>read more articles like this</button>
             </Link>
 
@@ -71,7 +71,6 @@ class SingleArticleView extends Component {
                     <button
                       disabled={comment.author !== this.props.userName}
                       onClick={() => {
-                        console.log("hi", comments_id, this.props.article_id);
                         deleteComment(comments_id).then(res => {
                           fetchAllCommentsByArticleId(this.props.article_id);
                         });
@@ -97,7 +96,6 @@ class SingleArticleView extends Component {
   };
 
   componentDidMount = () => {
-    // console.log("prop", this.state.individualArticle);
     Promise.all([
       fetchSingleArticle(this.props.article_id),
       fetchAllCommentsByArticleId(this.props.article_id)

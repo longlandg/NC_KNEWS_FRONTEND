@@ -41,12 +41,13 @@ class HomeView extends Component {
       </div>
     );
   }
-
   componentDidMount = () => {
     Promise.resolve(
-      fetchAllArticles(this.state.sortBy).then(articles => {
-        this.setState({ allArticles: articles });
-      })
+      fetchAllArticles(this.props.filterBy, this.state.sortBy).then(
+        articles => {
+          this.setState({ allArticles: articles });
+        }
+      )
     );
   };
 

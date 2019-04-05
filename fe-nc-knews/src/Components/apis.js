@@ -1,8 +1,15 @@
 import Axios from "axios";
 
-export const fetchAllArticles = async sortBy => {
+export const fetchAllUsers = async () => {
   const { data, status } = await Axios.get(
-    `https://longlandncknews.herokuapp.com/api/articles?${sortBy}`
+    `https://longlandncknews.herokuapp.com/api/users`
+  );
+  console.log("hello im in the function", data.users);
+  return data.users;
+};
+export const fetchAllArticles = async (sortBy, filterBy) => {
+  const { data, status } = await Axios.get(
+    `https://longlandncknews.herokuapp.com/api/articles?${(filterBy, sortBy)}`
   );
   // console.log("hello im in the function", data.articles);
   return data.articles;
@@ -39,6 +46,7 @@ export const postArticle = newarticle => {
 };
 
 export const postComment = (newcomment, article_id) => {
+  console.log("post", newcomment.author);
   return Axios.post(
     `https://longlandncknews.herokuapp.com/api/articles/${article_id}/comments`,
     newcomment

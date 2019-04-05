@@ -10,11 +10,12 @@ import SingleArticleView from "./PageViews/SingleArticleView";
 import PostCommentView from "./PageViews/PostCommentView";
 import UserPageView from "./PageViews/UserPageView";
 import PostArticleView from "./PageViews/PostArticleView";
+import SignInPageView from "./PageViews/SignInPageView";
 
 class App extends Component {
   state = {
     userLoggedIn: true,
-    userName: "weegembump"
+    userName: "grumpy19"
   };
 
   render = () => {
@@ -24,8 +25,13 @@ class App extends Component {
         <Nav userName={this.state.userName} />
         <Router>
           <HomeView path="/" />
+          <HomeView path="/:topic" />
 
-          {/* <SignInPage userName={this.state.userName} path="/user" /> */}
+          <SignInPageView
+            userLoginFunc={this.userLoginFunc}
+            userName={this.state.userName}
+            path="/login"
+          />
           <SingleArticleView
             userName={this.state.userName}
             path="/articles/:article_id"
@@ -46,6 +52,10 @@ class App extends Component {
         </Router>
       </div>
     );
+  };
+
+  userLoginFunc = loggedUserName => {
+    this.setState({ userName: loggedUserName });
   };
 }
 

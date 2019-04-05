@@ -16,6 +16,9 @@ class PostCommentView extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const newComment = this.state;
+    console.log("this is the rops", this.props);
+    newComment.username = this.props.userName;
+    console.log("this is the new comment", newComment);
     postComment(newComment, this.props.article_id).then(res => {
       navigate(`/articles/${this.props.article_id}`);
     });

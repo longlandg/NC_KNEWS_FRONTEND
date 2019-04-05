@@ -11,6 +11,9 @@ const Nav = props => {
       <Link to={`/users/${props.userName}`}>
         <button>User</button>
       </Link>
+      <Link to={`/login`}>
+        <button>Sign In / Log In</button>
+      </Link>
     </nav>
   );
 };

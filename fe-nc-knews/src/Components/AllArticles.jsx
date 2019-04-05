@@ -40,32 +40,18 @@ class AllArticles extends Component {
     );
   }
 
-  clicker = e => {
-    e.preventDefault();
+  // clicker = e => {
+  //   e.preventDefault();
 
-    Axios.get(
-      `https://longlandncknews.herokuapp.com/api/articles/${e.target.value}`
-    ).then(res => {
-      let individualarticle = res.data;
-      this.setState({ individualArticle: res.data.article }, () =>
-        console.log(this.state)
-      );
-    });
-  };
+  //   Axios.get(
+  //     `https://longlandncknews.herokuapp.com/api/articles/${e.target.value}`
+  //   ).then(res => {
+  //     let individualarticle = res.data;
+  //     this.setState({ individualArticle: res.data.article }, () =>
+  //       console.log(this.state)
+  //     );
+  //   });
+  // };
 }
 
 export default AllArticles;
-
-// const clicker = (e) => {
-//   e.preventDefault();
-//   console.log('The link was clicked.', e.target.value);
-//   fetchArticle(e.target.Value)
-// }
-//     const fetcharticle = (selectedId) => {
-//       Axios.get(`https://longlandncknews.herokuapp.com/api/articles/${selectedId}`)
-//       .then(res => {
-//         let individualarticle = res.data
-//         console.log(individualarticle)
-//         // this.setState({blockList: res.data.blocks})
-//       })
-//     }

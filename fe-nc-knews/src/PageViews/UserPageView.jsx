@@ -21,6 +21,7 @@ class userPageView extends Component {
       <div>
         {this.state.userInfo && (
           <div>
+            <h1>user view</h1>
             <h1>Username: {this.state.userInfo.username}</h1>
             <h1>Name: {this.state.userInfo.name}</h1>
             <img src={this.state.userInfo.avatar_url} />

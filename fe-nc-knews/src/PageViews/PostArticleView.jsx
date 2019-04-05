@@ -32,12 +32,6 @@ class PostArticleView extends Component {
     });
   };
 
-  //   axios
-  //     .post(`https://longlandncknews.herokuapp.com/api/articles`, newArticle)
-  //     .then(res => {
-  //       navigate(`/users/${this.props.userName}`);
-  //     });
-
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
