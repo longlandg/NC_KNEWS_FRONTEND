@@ -5,7 +5,7 @@ import { postArticle, fetchAllTopics } from "../Components/apis";
 
 class PostArticleView extends Component {
   state = {
-    title: "",
+    title: "george",
     body: "",
     topic: "",
     AllTopics: "",
@@ -64,20 +64,25 @@ class PostArticleView extends Component {
             Title:
             <input
               type="text"
-              value={this.state.value}
+              value={this.state.title}
               onChange={this.handleTitleChange}
               required
             />
           </label>
-          <label>
-            Topic:
-            <input
-              type="text"
-              value={this.state.value}
-              onChange={this.handleTopicChange}
-              required
-            />
-          </label>
+
+          {this.props.newTopic ? (
+            <p>Topic: {this.props.newTopic}</p>
+          ) : (
+            <label>
+              Topic:
+              <input
+                type="text"
+                value={this.state.value}
+                onChange={this.handleTopicChange}
+                required
+              />
+            </label>
+          )}
 
           <label>
             {" "}

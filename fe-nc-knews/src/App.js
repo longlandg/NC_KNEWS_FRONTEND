@@ -60,7 +60,7 @@ class App extends Component {
           />
           <PostArticleView
             userName={this.state.userName}
-            path="/articles/postarticle"
+            path="/articles/postarticle/:newTopic"
           />
         </Router>
       </div>

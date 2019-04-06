@@ -19,16 +19,12 @@ class CreateTopicView extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.setState({
-      slug: event.target.value,
-      description: event.target.value
-    });
     const newTopic = this.state;
 
     postTopic(newTopic).then(res => {
       console.log("hello", newTopic);
       console.log(this.props);
-      navigate(`/article/createquery/:slug`);
+      navigate(`/article/createquery/${this.state.slug}`);
     });
   };
 
