@@ -43,6 +43,7 @@ class HomeView extends Component {
     );
   }
   componentDidMount = () => {
+    console.log("this.props.path", this.props.path);
     let filterby = "";
     if (this.props.topic === undefined) {
       filterby = "";
@@ -81,17 +82,20 @@ class HomeView extends Component {
   };
 
   componentDidUpdate = (prevProps, prevState, snapshot) => {
-    if (prevProps === this.props) {
-      console.log("this is the prevprops", prevProps);
-      console.log("this is the this.props", this.props);
-    } //need to compare the chanege here then re implements it here
+    // if (prevProps.path === this.props) {
+    console.log("this is the prevprops", prevProps);
+    console.log("this is the this.props", this.props);
+    // } //need to compare the chanege here then re implements it here
 
     // if (this.props.topic !== '') {
     //   this.setState({ filterBy: this.props.topic });
     // }
     //   console.log(this.props.topic);
     //   const filterby = `topic=${this.props.topic}&&`;
-    if (this.state.sortBy !== prevState.sortBy) {
+    if (
+      this.state.sortBy !== prevState.sortBy ||
+      prevProps.path !== this.props.path
+    ) {
       fetchAllArticles(this.props.topic, this.state.sortBy).then(articles => {
         this.setState({ allArticles: articles });
       });

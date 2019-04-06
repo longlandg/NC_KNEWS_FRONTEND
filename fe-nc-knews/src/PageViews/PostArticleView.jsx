@@ -1,13 +1,21 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link, navigate } from "@reach/router";
-import { postArticle } from "../Components/apis";
+import { postArticle, fetchAllTopics } from "../Components/apis";
 
 class PostArticleView extends Component {
   state = {
     title: "",
     body: "",
-    topic: ""
+    topic: "",
+    AllTopics: "",
+    TopicDoesExist: true
+  };
+  componentDidMount = () => {
+    fetchAllTopics().then(topics => {
+      this.setState({ AllTopics: topics });
+      console.log("hello im the topics", topics);
+    });
   };
 
   handleTitleChange = event => {
@@ -25,42 +33,63 @@ class PostArticleView extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    const newArticle = this.state;
-    newArticle.username = this.props.userName;
+    const newArticle = {
+      title: this.props.userName,
+      body: this.state.body,
+      topic: this.state.topic
+    };
 
-    postArticle(newArticle).then(res => {
-      navigate(`/users/${this.props.userName}`);
-    });
+    if (
+      this.state.AllTopics.filter(slug => slug.slug === this.state.topic)
+        .length === 0
+    ) {
+      this.setState({ TopicDoesExist: false });
+      console.log("need a topic bro");
+    } else {
+      postArticle(newArticle).then(res => {
+        this.setState({ TopicDoesExist: true });
+        navigate(`/users/${this.props.userName}`);
+      });
+    }
   };
-
+  isThereTopic = () => {
+    if (this.state.TopicDoesExist === true) return "you need a new topic";
+  };
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Title:
-          <input
-            type="text"
-            value={this.state.value}
-            onChange={this.handleTitleChange}
-          />
-        </label>
-        <label>
-          Topic:
-          <input
-            type="text"
-            value={this.state.value}
-            onChange={this.handleTopicChange}
-          />
-        </label>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Title:
+            <input
+              type="text"
+              value={this.state.value}
+              onChange={this.handleTitleChange}
+            />
+          </label>
+          <label>
+            Topic:
+            <input
+              type="text"
+              value={this.state.value}
+              onChange={this.handleTopicChange}
+            />
+          </label>
 
-        <label>
-          {" "}
-          Body:
-          <textarea value={this.state.value} onChange={this.handleBodyChange} />
-        </label>
-        <input type="submit" value="post article" />
-      </form>
+          <label>
+            {" "}
+            Body:
+            <textarea
+              value={this.state.value}
+              onChange={this.handleBodyChange}
+            />
+          </label>
+          <input type="submit" value="post article" />
+        </form>
+        {/* <p> {isThereTopic}</p> */}
+      </div>
     );
   }
 }
+
 export default PostArticleView;

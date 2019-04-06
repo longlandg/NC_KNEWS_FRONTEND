@@ -31,11 +31,9 @@ class SignInPageView extends Component {
   };
 
   componentDidMount = () => {
-    Promise.resolve(
-      fetchAllUsers().then(users => {
-        this.setState({ AllUsers: users });
-      })
-    );
+    fetchAllUsers().then(users => {
+      this.setState({ AllUsers: users });
+    });
   };
 
   render() {
