@@ -41,11 +41,7 @@ class SingleArticleView extends Component {
             </Link>
 
             <button onClick={() => this.handleVoteClick(1)}>vote up</button>
-            <span>
-              {" "}
-              total votes:{" "}
-              {this.state.individualArticle.votes + this.state.voteChange}
-            </span>
+            <span> total votes: {this.state.individualArticle.votes}</span>
             <button onClick={() => this.handleVoteClick(-1)}>vote down</button>
             {/* <Link to={`/api/articles/${this.state.individualArticle.article_id}/postcomment`} ><button>post comment</button></Link> */}
           </div>
@@ -80,16 +76,19 @@ class SingleArticleView extends Component {
                     >
                       delete comment
                     </button>
-                    <button onClick={() => this.handleCommentsVoteClick(1)}>
+                    <button
+                      onClick={() =>
+                        this.handleCommentsVoteClick(1, comments_id)
+                      }
+                    >
                       vote up
                     </button>
-                    <span>
-                      {" "}
-                      total votes:{" "}
-                      {this.state.individualArticle.votes +
-                        this.state.CommentVoteChange}
-                    </span>
-                    <button onClick={() => this.handleCommentsVoteClick(-1)}>
+                    <span> total votes: {votes}</span>
+                    <button
+                      onClick={() =>
+                        this.handleCommentsVoteClick(-1, comments_id)
+                      }
+                    >
                       vote down
                     </button>
                   </li>
@@ -103,16 +102,27 @@ class SingleArticleView extends Component {
   }
 
   handleVoteClick = numberOfVotes => {
-    updateCommentsVotes(numberOfVotes, this.props.article_id);
+    updateArticleVotes(numberOfVotes, this.props.article_id);
     this.setState(state => {
-      return { CommentVoteChange: state.CommentVoteChange + numberOfVotes };
+      let updatedIndividualArticle = state.individualArticle;
+      updatedIndividualArticle.votes =
+        updatedIndividualArticle.votes + numberOfVotes;
+      return { individualArticle: updatedIndividualArticle };
     });
   };
 
-  handleCommentsVoteClick = numberOfVotes => {
-    updateArticleVotes(numberOfVotes, this.props.comments_id);
+  handleCommentsVoteClick = (numberOfVotes, comments_id) => {
+    updateCommentsVotes(numberOfVotes, comments_id);
     this.setState(state => {
-      return { voteChange: state.voteChange + numberOfVotes };
+      // return { voteChange: state.voteChange + numberOfVotes };
+      let updatedCommentsState = state.allComments;
+      updatedCommentsState.map(comment => {
+        if (comment.comments_id === comments_id) {
+          console.log("i found the comment");
+          comment.votes = comment.votes + numberOfVotes;
+        }
+      });
+      return { allComments: updatedCommentsState };
     });
   };
 

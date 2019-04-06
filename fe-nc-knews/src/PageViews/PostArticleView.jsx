@@ -65,6 +65,7 @@ class PostArticleView extends Component {
               type="text"
               value={this.state.value}
               onChange={this.handleTitleChange}
+              required
             />
           </label>
           <label>
@@ -73,6 +74,7 @@ class PostArticleView extends Component {
               type="text"
               value={this.state.value}
               onChange={this.handleTopicChange}
+              required
             />
           </label>
 
@@ -82,6 +84,7 @@ class PostArticleView extends Component {
             <textarea
               value={this.state.value}
               onChange={this.handleBodyChange}
+              required
             />
           </label>
           <input type="submit" value="post article" />
