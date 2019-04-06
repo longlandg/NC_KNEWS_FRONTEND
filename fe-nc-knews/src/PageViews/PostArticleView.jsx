@@ -34,9 +34,10 @@ class PostArticleView extends Component {
     event.preventDefault();
 
     const newArticle = {
-      title: this.props.userName,
+      title: this.state.title,
       body: this.state.body,
-      topic: this.state.topic
+      topic: this.state.topic,
+      username: this.props.userName
     };
 
     if (
@@ -89,7 +90,8 @@ class PostArticleView extends Component {
           </label>
           <input type="submit" value="post article" />
         </form>
-        {/* <p> {isThereTopic}</p> */}
+
+        {!this.state.TopicDoesExist && <p>This is not a valid topic bruv</p>}
       </div>
     );
   }

@@ -14,13 +14,9 @@ const Nav = props => {
       <Link to={`/login`}>
         <button>Sign In / Log In</button>
       </Link>
-      <button
-        // disabled={}
-        onClick={() => props.logOutFunc()}
-      >
-        {/* , => props.logOutFunc().navigate(`/`) */}
-        log out
-      </button>
+      <Link to="/">
+        <button onClick={() => props.logOutFunc()}>log out</button>
+      </Link>
     </nav>
   );
 };

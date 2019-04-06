@@ -71,7 +71,7 @@ class App extends Component {
     this.setState({ userName: loggedUserName });
   };
   logOutFunc = () => {
-    this.setState({ userName: "" }).navigate(`/`);
+    this.setState({ userName: "" });
   };
 }
 
