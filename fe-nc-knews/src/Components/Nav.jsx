@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 
 const Nav = props => {
   return (
@@ -14,6 +14,13 @@ const Nav = props => {
       <Link to={`/login`}>
         <button>Sign In / Log In</button>
       </Link>
+      <button
+        // disabled={}
+        onClick={() => props.logOutFunc()}
+      >
+        {/* , => props.logOutFunc().navigate(`/`) */}
+        log out
+      </button>
     </nav>
   );
 };

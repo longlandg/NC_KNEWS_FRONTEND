@@ -8,7 +8,8 @@ class HomeView extends Component {
   state = {
     allArticles: null,
     sortBy: "",
-    filterBy: ""
+    filterBy: "",
+    topic: ""
   };
 
   render() {
@@ -42,13 +43,27 @@ class HomeView extends Component {
     );
   }
   componentDidMount = () => {
-    Promise.resolve(
-      fetchAllArticles(this.props.filterBy, this.state.sortBy).then(
-        articles => {
-          this.setState({ allArticles: articles });
-        }
-      )
-    );
+    let filterby = "";
+    if (this.props.topic === undefined) {
+      filterby = "";
+    } else if (this.props.topic) {
+      filterby = `topic=${this.props.topic}&&`;
+    }
+    // console.log("this.props.topic", this.props.topic);
+    // if (this.props.topic !== this.state.filterBy) {
+    //   filterby = `topic=${this.props.topic}&&`;
+    // }
+    // let filterby = "";
+    // if (this.props.topic === undefined) {
+    //   filterby = "";
+    // } else {
+    //   filterby = `topic=${this.props.topic}&&`;
+    // }
+
+    fetchAllArticles(filterby, this.state.sortBy).then(articles => {
+      this.setState({ allArticles: articles });
+      console.log(this.state.filterBy);
+    });
   };
 
   changeSorting = event => {
@@ -58,13 +73,28 @@ class HomeView extends Component {
     }
   };
 
-  componentDidUpdate = (_, prevState) => {
+  homeFilterReset = event => {
+    event.preventDefault();
+    if (event.target.value !== this.state.sortBy) {
+      this.setState({ sortBy: event.target.value });
+    }
+  };
+
+  componentDidUpdate = (prevProps, prevState, snapshot) => {
+    if (prevProps === this.props) {
+      console.log("this is the prevprops", prevProps);
+      console.log("this is the this.props", this.props);
+    } //need to compare the chanege here then re implements it here
+
+    // if (this.props.topic !== '') {
+    //   this.setState({ filterBy: this.props.topic });
+    // }
+    //   console.log(this.props.topic);
+    //   const filterby = `topic=${this.props.topic}&&`;
     if (this.state.sortBy !== prevState.sortBy) {
-      Promise.resolve(
-        fetchAllArticles(this.state.sortBy).then(articles => {
-          this.setState({ allArticles: articles });
-        })
-      );
+      fetchAllArticles(this.props.topic, this.state.sortBy).then(articles => {
+        this.setState({ allArticles: articles });
+      });
     }
   };
 }

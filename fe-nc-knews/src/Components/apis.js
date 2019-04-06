@@ -7,11 +7,14 @@ export const fetchAllUsers = async () => {
   console.log("hello im in the function", data.users);
   return data.users;
 };
-export const fetchAllArticles = async (sortBy, filterBy) => {
+export const fetchAllArticles = async (filterBy, sortBy) => {
   const { data, status } = await Axios.get(
-    `https://longlandncknews.herokuapp.com/api/articles?${(filterBy, sortBy)}`
+    `https://longlandncknews.herokuapp.com/api/articles?${filterBy}${sortBy}`
   );
-  // console.log("hello im in the function", data.articles);
+
+  console.log(
+    `https://longlandncknews.herokuapp.com/api/articles?${filterBy}${sortBy}`
+  );
   return data.articles;
 };
 
@@ -30,6 +33,13 @@ export const updateArticleVotes = (direction, article_id) => {
   );
 };
 
+export const updateCommentsVotes = (direction, comments_id) => {
+  return Axios.patch(
+    `https://longlandncknews.herokuapp.com/api/comments/${comments_id}`,
+    { inc_votes: direction }
+  );
+};
+
 export const fetchUserArticles = async username => {
   const { data, status } = await Axios.get(
     `https://longlandncknews.herokuapp.com/api/articles?author=${username}`
@@ -42,6 +52,14 @@ export const postArticle = newarticle => {
   return Axios.post(
     `https://longlandncknews.herokuapp.com/api/articles`,
     newarticle
+  );
+};
+
+export const postTopic = newtopic => {
+  console.log(newtopic);
+  return Axios.post(
+    `https://longlandncknews.herokuapp.com/api/topics`,
+    newtopic
   );
 };
 

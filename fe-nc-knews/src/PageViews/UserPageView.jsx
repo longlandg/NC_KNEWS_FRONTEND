@@ -25,6 +25,9 @@ class userPageView extends Component {
             <h1>Username: {this.state.userInfo.username}</h1>
             <h1>Name: {this.state.userInfo.name}</h1>
             <img src={this.state.userInfo.avatar_url} />
+            <Link to={`/topics/createtopic`}>
+              <h4>Write new topic</h4>
+            </Link>
             <Link to={`/articles/postarticle`}>
               <h4>Write new article</h4>
             </Link>
@@ -79,7 +82,6 @@ class userPageView extends Component {
       fetchUserArticles(this.props.userName)
     ]).then(([userInfo, userArticles]) => {
       this.setState({ userInfo, userArticles });
-      console.log(this.state);
     });
   };
 

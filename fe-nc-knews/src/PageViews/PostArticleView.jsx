@@ -27,6 +27,7 @@ class PostArticleView extends Component {
 
     const newArticle = this.state;
     newArticle.username = this.props.userName;
+
     postArticle(newArticle).then(res => {
       navigate(`/users/${this.props.userName}`);
     });

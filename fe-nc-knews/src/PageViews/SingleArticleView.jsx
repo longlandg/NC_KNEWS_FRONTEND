@@ -4,6 +4,7 @@ import { Link } from "@reach/router";
 import {
   deleteComment,
   updateArticleVotes,
+  updateCommentsVotes,
   fetchSingleArticle,
   fetchAllCommentsByArticleId
 } from "../Components/apis";
@@ -12,7 +13,8 @@ class SingleArticleView extends Component {
   state = {
     individualArticle: null,
     allComments: null,
-    voteChange: 0
+    voteChange: 0,
+    CommentVoteChange: 0
   };
 
   render() {
@@ -78,6 +80,18 @@ class SingleArticleView extends Component {
                     >
                       delete comment
                     </button>
+                    <button onClick={() => this.handleCommentsVoteClick(1)}>
+                      vote up
+                    </button>
+                    <span>
+                      {" "}
+                      total votes:{" "}
+                      {this.state.individualArticle.votes +
+                        this.state.CommentVoteChange}
+                    </span>
+                    <button onClick={() => this.handleCommentsVoteClick(-1)}>
+                      vote down
+                    </button>
                   </li>
                 );
               })}
@@ -89,7 +103,14 @@ class SingleArticleView extends Component {
   }
 
   handleVoteClick = numberOfVotes => {
-    updateArticleVotes(numberOfVotes, this.props.article_id);
+    updateCommentsVotes(numberOfVotes, this.props.article_id);
+    this.setState(state => {
+      return { CommentVoteChange: state.CommentVoteChange + numberOfVotes };
+    });
+  };
+
+  handleCommentsVoteClick = numberOfVotes => {
+    updateArticleVotes(numberOfVotes, this.props.comments_id);
     this.setState(state => {
       return { voteChange: state.voteChange + numberOfVotes };
     });
