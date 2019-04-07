@@ -1,11 +1,173 @@
- .App {
+.App {
+  /* text-align: center; */
+  /* background-color: orange; */
+  width: 100%;
+  height: 100%;
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+}
+.userpagehead {
   text-align: center;
- }
 
+  overflow: auto;
+}
+
+.topicquery {
+  text-align: center;
+  color: black;
+  overflow: auto;
+  margin-bottom: 0px;
+}
+
+h4 {
+  color: black;
+  margin-bottom: 0px;
+}
+
+h5 {
+  color: black;
+  margin-bottom: 0px;
+}
+.articledetails {
+  color: black;
+  margin-bottom: 0px;
+}
+
+/* .articletitle {
+  color: black;
+  margin-bottom: 0px;
+  display: inline-block;
+  float: left;
+}
+
+
+.dateposted {
+  color: black;
+  margin-bottom: 0px;
+  display: inline-block;
+  float: right;
+} */
+.tinytext {
+  font-size: 10pt;
+  color: #6c757d;
+
+  float: left;
+}
 .title {
+  text-align: center;
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
   font-weight: 900;
-  font-size: 50pt
+  font-size: 50pt;
+  color: whitesmoke;
+  background-color: #6c757d;
+  margin-bottom: 0px;
+}
 
+.articlecard {
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+  font-weight: 900;
+  font-size: 10pt;
+  font-display: #6c757d;
+  border-bottom-color: #6c757d;
+}
+ul {
+  list-style-type: none;
+  /* border-style: solid; */
+  text-decoration: none;
+  /* color: black; */
 
+  margin: 0px;
+  padding: 0px;
+  /* 
+  flex-wrap: wrap;
+  height: 100%;
+  overflow: scroll; */
+}
+
+.individualArticleCards {
+  /* border-top-style: dotted;
+  border-right-style: solid;
+  border-bottom-style: dotted;
+  border-left-style: solid;
+  border-width: 5px; */
+
+  flex-wrap: wrap;
+  height: 100%;
+
+  background-color: whitesmoke;
+  border: 2px solid #6c757d;
+  padding: 5px;
+  margin: 5px;
+}
+
+.individualCommentsCards {
+  /* border-top-style: dotted;
+  border-right-style: solid;
+  border-bottom-style: dotted;
+  border-left-style: solid;
+  border-width: 5px; */
+  flex-wrap: wrap;
+  height: 100%;
+  overflow: scroll;
+  background-color: whitesmoke;
+  border: 2px dotted #6c757d;
+  padding: 5px;
+  margin: 5px;
+}
+
+/* 
+.browser-default custom-select {
+  padding: 5px;
+  margin: 5px;
+} */
+
+.deletebutton {
+  float: right;
+  overflow: auto;
+}
+
+.votebutton {
+  float: left;
+  overflow: auto;
+}
+
+.postbutton {
+  float: right;
+  overflow: auto;
+}
+
+.articlebutton {
+  float: middle;
+  overflow: auto;
+}
+
+.totalvotes {
+  text-align: left;
+  margin: 1px 3px 1px 3px;
+}
+
+.sortBySelector {
+  padding: 5px;
+  margin: 5px;
+}
+
+.navbar {
+  background-color: #6c757d;
+  margin: 3px 0px 15px 0px;
+}
+
+#signInForm {
+  float: center;
+  overflow: auto;
+}
+
+.signinginform {
+  float: center;
+  overflow: auto;
+  text-align: center;
+}
+
+.articleinform {
+  float: center;
+  overflow: auto;
+  text-align: center;
 }

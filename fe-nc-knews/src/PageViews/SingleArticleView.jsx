@@ -21,29 +21,74 @@ class SingleArticleView extends Component {
     return (
       <div>
         {this.state.individualArticle && (
-          <div>
+          <div className="individualArticleCards">
             <h1>{this.state.individualArticle.title}</h1>
-            <p>Author:{this.state.individualArticle.author}</p>
-            <p>Posted:{this.state.individualArticle.created_at}</p>
-            <p>Topic:{this.state.individualArticle.topic}</p>
-            <p>{this.state.individualArticle.body}</p>
-
-            <Link
-              to={`/articles/${
-                this.state.individualArticle.article_id
-              }/postcomment`}
-            >
-              <button>post comment</button>
-            </Link>
+            <p className="articledetails">
+              Author:{this.state.individualArticle.author}
+            </p>
+            <p className="articledetails">
+              Posted:{this.state.individualArticle.created_at}
+            </p>
+            <p className="articledetails">
+              Topic:{this.state.individualArticle.topic}
+            </p>
+            <p className="articledetails">
+              {this.state.individualArticle.body}
+            </p>
+            <p className="articledetails">
+              {this.state.individualArticle.article_id}
+            </p>
+            <p className="totalvotes">
+              {" "}
+              total votes:{" "}
+              {this.state.individualArticle.votes + this.state.voteChange}
+            </p>
 
             <Link to={`/${this.state.individualArticle.topic}`}>
-              <button>read more articles like this</button>
+              <button
+                className="articlesbutton"
+                type="button"
+                class="btn btn-info btn-sm"
+              >
+                read more articles like this
+              </button>
             </Link>
+            <div className="postbutton">
+              <Link
+                to={`/articles/${
+                  this.state.individualArticle.article_id
+                }/postcomment`}
+              >
+                <button
+                  disabled={!this.props.loggedIn}
+                  className="postbutton"
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                >
+                  post comment
+                </button>
+              </Link>
+            </div>
+            <div className="votebutton">
+              <button
+                disabled={!this.props.loggedIn}
+                type="button"
+                class="btn btn-success btn-sm"
+                onClick={() => this.handleVoteClick(1)}
+              >
+                vote up
+              </button>
 
-            <button onClick={() => this.handleVoteClick(1)}>vote up</button>
-            <span> total votes: {this.state.individualArticle.votes}</span>
-            <button onClick={() => this.handleVoteClick(-1)}>vote down</button>
-            {/* <Link to={`/api/articles/${this.state.individualArticle.article_id}/postcomment`} ><button>post comment</button></Link> */}
+              <button
+                disabled={!this.props.loggedIn}
+                type="button"
+                class="btn btn-danger btn-sm"
+                onClick={() => this.handleVoteClick(-1)}
+              >
+                vote down
+              </button>
+              {/* <Link to={`/api/articles/${this.state.individualArticle.article_id}/postcomment`} ><button>post comment</button></Link> */}
+            </div>
           </div>
         )}
 
@@ -59,38 +104,58 @@ class SingleArticleView extends Component {
                   body
                 } = comment;
                 return (
-                  <li key={comments_id}>
-                    <h4>Author: {author}</h4>
-                    <p> Date Posted: {created_at}</p>
-                    <p> Comment Id: {comments_id}</p>
-                    <p>{body}</p>
-                    <p>Votes: {votes}</p>
+                  <li key={comments_id} className="individualCommentsCards">
+                    {/* <p className="tinytext">comment....</p> */}
+                    <p className="articledetails">Comment: {body}</p>
+                    <p className="articledetails">Date Posted: {created_at}</p>
+                    <p className="articledetails">Author: {author}</p>
+                    <p className="articledetails"> Comment Id: {comments_id}</p>
 
-                    <button
-                      disabled={comment.author !== this.props.userName}
-                      onClick={() => {
-                        deleteComment(comments_id).then(res => {
-                          fetchAllCommentsByArticleId(this.props.article_id);
-                        });
-                      }}
-                    >
-                      delete comment
-                    </button>
-                    <button
-                      onClick={() =>
-                        this.handleCommentsVoteClick(1, comments_id)
-                      }
-                    >
-                      vote up
-                    </button>
-                    <span> total votes: {votes}</span>
-                    <button
-                      onClick={() =>
-                        this.handleCommentsVoteClick(-1, comments_id)
-                      }
-                    >
-                      vote down
-                    </button>
+                    <p className="totalvotes">
+                      {" "}
+                      total votes:
+                      {comment.votes + this.state.CommentVoteChange}
+                    </p>
+                    {/* <p className="totalvotes"> total votes: {votes}</p> */}
+                    <div className="deletebutton">
+                      <button
+                        className="deletebutton"
+                        type="button"
+                        class="btn btn-warning btn-sm"
+                        disabled={this.props.userName !== author}
+                        onClick={() => {
+                          deleteComment(comments_id).then(res => {
+                            fetchAllCommentsByArticleId(this.props.article_id);
+                          });
+                        }}
+                      >
+                        delete comment {console.log(this.props.userName)}
+                      </button>
+                    </div>
+                    <div className="votebutton">
+                      <button
+                        disabled={!this.props.userName}
+                        type="button"
+                        class="btn btn-success btn-sm"
+                        onClick={() =>
+                          this.handleCommentsVoteClick(1, comment.comments_id)
+                        }
+                      >
+                        {" "}
+                        vote up
+                      </button>
+
+                      <button
+                        disabled={!this.props.loggedIn}
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        onClick={() =>
+                          this.handleCommentsVoteClick(-1, comment.comments_id)
+                        }
+                      >
+                        vote down
+                      </button>
+                    </div>
                   </li>
                 );
               })}
@@ -103,28 +168,36 @@ class SingleArticleView extends Component {
 
   handleVoteClick = numberOfVotes => {
     updateArticleVotes(numberOfVotes, this.props.article_id);
-    this.setState(state => {
-      let updatedIndividualArticle = state.individualArticle;
-      updatedIndividualArticle.votes =
-        updatedIndividualArticle.votes + numberOfVotes;
-      return { individualArticle: updatedIndividualArticle };
+    this.setState(prevState => {
+      return {
+        voteChange: prevState.voteChange + numberOfVotes
+      };
     });
   };
 
   handleCommentsVoteClick = (numberOfVotes, comments_id) => {
     updateCommentsVotes(numberOfVotes, comments_id);
-    this.setState(state => {
-      // return { voteChange: state.voteChange + numberOfVotes };
-      let updatedCommentsState = state.allComments;
-      updatedCommentsState.map(comment => {
-        if (comment.comments_id === comments_id) {
-          console.log("i found the comment");
-          comment.votes = comment.votes + numberOfVotes;
-        }
-      });
-      return { allComments: updatedCommentsState };
+    this.setState(prevState => {
+      return {
+        CommentVoteChange: prevState.CommentVoteChange + numberOfVotes
+      };
     });
   };
+
+  // handleCommentsVoteClick = (numberOfVotes, comments_id) => {
+  //   updateCommentsVotes(numberOfVotes, comments_id);
+  //   this.setState(state => {
+  //     // return { voteChange: state.voteChange + numberOfVotes };
+  //     let updatedCommentsState = state.allComments;
+  //     updatedCommentsState.map(comment => {
+  //       if (comment.comments_id === comments_id) {
+  //         console.log("i found the comment");
+  //         comment.votes = comment.votes + numberOfVotes;
+  //       }
+  //     });
+  //     return { allComments: updatedCommentsState };
+  //   });
+  // };
 
   componentDidMount = () => {
     Promise.all([
@@ -139,3 +212,16 @@ class SingleArticleView extends Component {
 }
 
 export default SingleArticleView;
+
+// handleVoteClick = numberOfVotes => {
+//   updateArticleVotes(numberOfVotes, this.props.article_id);
+//   this.setState(state => {
+//     let updatedIndividualArticle = state.individualArticle;
+//     updatedIndividualArticle.votes =
+//       updatedIndividualArticle.votes + numberOfVotes;
+//     return {
+//       individualArticle: updatedIndividualArticle,
+//       voteChange: numberOfVotes
+//     };
+//   });
+// };

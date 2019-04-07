@@ -5,7 +5,7 @@ import { postArticle, fetchAllTopics } from "../Components/apis";
 
 class PostArticleView extends Component {
   state = {
-    title: "george",
+    title: "",
     body: "",
     topic: "",
     AllTopics: "",
@@ -45,7 +45,7 @@ class PostArticleView extends Component {
         .length === 0
     ) {
       this.setState({ TopicDoesExist: false });
-      console.log("need a topic bro");
+      console.log("need a topic");
     } else {
       postArticle(newArticle).then(res => {
         this.setState({ TopicDoesExist: true });
@@ -58,8 +58,60 @@ class PostArticleView extends Component {
   };
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
+      <div className="articleinform">
+        <form
+          onSubmit={this.handleSubmit}
+          class="text-center border border-light p-5"
+        >
+          <input
+            type="text"
+            id="defaultContactFormName"
+            class="form-control mb-4"
+            placeholder="Article title"
+            value={this.state.title}
+            onChange={this.handleTitleChange}
+            required
+          />
+          {this.props.newTopic ? (
+            <p>Topic: {this.props.newTopic}</p>
+          ) : (
+            <input
+              type="text"
+              id="defaultContactFormEmail"
+              class="form-control mb-4"
+              placeholder="Article topic"
+              value={this.state.newTopic}
+              onChange={this.handleTopicChange}
+              required
+            />
+          )}
+
+          <div class="form-group">
+            <textarea
+              class="form-control rounded-0"
+              id="exampleFormControlTextarea2"
+              rows="10"
+              placeholder="Write your article here"
+              value={this.state.value}
+              onChange={this.handleBodyChange}
+              required
+            />
+          </div>
+          <button class="btn btn-info btn-block" type="submit">
+            Send
+          </button>
+          {!this.state.TopicDoesExist && (
+            <p>
+              This topic doesnot exist you need to{" "}
+              <Link to={`/topics/createtopic`}>
+                <hp className="articledetails">create new topic</hp>
+              </Link>
+            </p>
+          )}
+        </form>
+      </div>
+
+      /* <form onSubmit={this.handleSubmit}>
           <label>
             Title:
             <input
@@ -94,10 +146,7 @@ class PostArticleView extends Component {
             />
           </label>
           <input type="submit" value="post article" />
-        </form>
-
-        {!this.state.TopicDoesExist && <p>This is not a valid topic bruv</p>}
-      </div>
+        </form> */
     );
   }
 }

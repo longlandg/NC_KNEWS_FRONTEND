@@ -15,8 +15,12 @@ class HomeView extends Component {
   render() {
     return (
       <div className="HomeView">
-        <label>sort by</label>
-        <select className="selector" onClick={this.changeSorting}>
+        <select
+          className="sortBySelector"
+          class="browser-default custom-select"
+          onClick={this.changeSorting}
+        >
+          <option selected>Sort articles by</option>
           <option value="sort_by=created_at&&order=desc">
             date descending
           </option>
@@ -34,8 +38,9 @@ class HomeView extends Component {
             number of votes ascending
           </option>
         </select>
+
         {this.state.allArticles && (
-          <div>
+          <div className="articlecard">
             <AllArticles allArticles={this.state.allArticles} />
           </div>
         )}
@@ -82,16 +87,6 @@ class HomeView extends Component {
   };
 
   componentDidUpdate = (prevProps, prevState, snapshot) => {
-    // if (prevProps.path === this.props) {
-    console.log("this is the prevprops", prevProps);
-    console.log("this is the this.props", this.props);
-    // } //need to compare the chanege here then re implements it here
-
-    // if (this.props.topic !== '') {
-    //   this.setState({ filterBy: this.props.topic });
-    // }
-    //   console.log(this.props.topic);
-    //   const filterby = `topic=${this.props.topic}&&`;
     if (
       this.state.sortBy !== prevState.sortBy ||
       prevProps.path !== this.props.path

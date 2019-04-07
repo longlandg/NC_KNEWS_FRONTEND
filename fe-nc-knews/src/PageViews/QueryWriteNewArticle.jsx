@@ -6,13 +6,19 @@ import { postTopic } from "../Components/apis";
 const QueryWriteNewArticle = props => {
   return (
     <div>
-      <h4>Congratulations you have created {props.newTopic}</h4>
+      <h4 className="topicquery">
+        Congratulations you have created the following topic: {props.newTopic}
+      </h4>
       {/* <h4>{console.log(this.state.slug)}</h4> */}
-      <Link to={`/articles/postarticle/${props.newTopic}`}>
-        <h4>Would you like to write a new article for this topic?</h4>
+      <Link to={`/articles/postarticle`}>
+        <p className="topicquery">
+          Would you like to write a new article for this topic?
+        </p>
       </Link>
-      <Link to={`/`}>
-        <h4>or would you like to return to your home page</h4>
+      <Link to={`/users/:username`}>
+        <p className="topicquery">
+          or would you like to return to your home page?
+        </p>
       </Link>
     </div>
   );

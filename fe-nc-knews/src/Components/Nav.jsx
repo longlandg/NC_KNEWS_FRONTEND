@@ -4,18 +4,34 @@ import { Link, navigate } from "@reach/router";
 
 const Nav = props => {
   return (
-    <nav>
+    <nav className="navbar">
       <Link to="/">
-        <button>Home</button>
+        <button
+          className="homebutton"
+          type="button"
+          class="btn btn-secondary btn-sm"
+        >
+          Home
+        </button>
       </Link>
       <Link to={`/users/${props.userName}`}>
-        <button>User</button>
+        <button type="button" class="btn btn-secondary btn-sm">
+          User
+        </button>
       </Link>
       <Link to={`/login`}>
-        <button>Sign In / Log In</button>
+        <button type="button" class="btn btn-secondary btn-sm">
+          Sign In / Log In
+        </button>
       </Link>
       <Link to="/">
-        <button onClick={() => props.logOutFunc()}>log out</button>
+        <button
+          type="button"
+          class="btn btn-secondary btn-sm"
+          onClick={() => props.logOutFunc()}
+        >
+          log out
+        </button>
       </Link>
     </nav>
   );

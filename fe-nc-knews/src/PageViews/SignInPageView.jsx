@@ -38,18 +38,21 @@ class SignInPageView extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          UserName:
-          <input
-            type="text"
-            value={this.state.userName}
-            onChange={this.handleUserNameChange}
-          />
-        </label>
+      <div className="signinginform">
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            UserName:
+            <input
+              id="signInForm"
+              type="text"
+              value={this.state.userName}
+              onChange={this.handleUserNameChange}
+            />
+          </label>
 
-        <input type="submit" value="Login" />
-      </form>
+          <input type="submit" value="Login" />
+        </form>
+      </div>
     );
   }
 }

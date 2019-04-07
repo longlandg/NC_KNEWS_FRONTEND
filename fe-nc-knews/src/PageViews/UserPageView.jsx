@@ -20,16 +20,15 @@ class userPageView extends Component {
     return (
       <div>
         {this.state.userInfo && (
-          <div>
-            <h1>user view</h1>
-            <h1>Username: {this.state.userInfo.username}</h1>
-            <h1>Name: {this.state.userInfo.name}</h1>
+          <div className="userpagehead">
+            <h1 className="articledetails">{this.state.userInfo.username}</h1>
+            <p className="articledetails">{this.state.userInfo.name}</p>
             <img src={this.state.userInfo.avatar_url} />
             <Link to={`/topics/createtopic`}>
-              <h4>Write new topic</h4>
+              <p className="articledetails">create new topic</p>
             </Link>
             <Link to={`/articles/postarticle`}>
-              <h4>Write new article</h4>
+              <p className="articledetails">write new article</p>
             </Link>
           </div>
         )}
@@ -46,21 +45,28 @@ class userPageView extends Component {
                   article_id
                 } = article;
                 return (
-                  <li key={article_id}>
-                    {" "}
+                  <li key={article_id} className="individualArticleCards">
                     <Link to={`/articles/${article_id}`}>
-                      <h4>
-                        Title: {title} Topic: {topic} Date Posted: {created_at}
-                      </h4>
-                      <h5>
-                        Number of Comments: {comment_count} Votes: {votes}
-                      </h5>
+                      <h4 className="articletitle">{title} </h4>
+                      <p className="articledetails">{topic} </p>
+                      <p className="articledetails">
+                        Date Posted: {created_at}
+                      </p>
+                      <p className="articledetails">
+                        Number of Comments: {comment_count}{" "}
+                      </p>
+                      <p className="articledetails">Votes: {votes}</p>
                     </Link>
                     <button
+                      className="deletebutton"
+                      type="button"
+                      class="btn btn-warning btn-sm"
                       disabled={article.author !== this.props.userName}
                       onClick={() => {
                         deleteArticle(article_id).then(res => {
                           fetchUserArticles(this.props.userName);
+                          console.log(article_id);
+                          navigate(`/articles/deletecomment`);
                         });
                       }}
                     >

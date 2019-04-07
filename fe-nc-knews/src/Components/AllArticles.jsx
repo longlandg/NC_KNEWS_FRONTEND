@@ -22,16 +22,17 @@ class AllArticles extends Component {
             article_id
           } = article;
           return (
-            <li key={article_id}>
+            <li key={article_id} className="individualArticleCards">
               {" "}
               <Link to={`/articles/${article_id}`}>
-                <h4>
-                  Title: {title} Topic: {topic} Date Posted: {created_at}
-                </h4>
-                <h5>
-                  Author: {author} Number of Comments: {comment_count} Votes:{" "}
-                  {votes}
-                </h5>
+                <h4 className="articletitle">{title} </h4>
+                <p className="articledetails">{topic} </p>
+                <p className="articledetails">Date Posted: {created_at}</p>
+                <p className="articledetails">Author: {author} </p>
+                <p className="articledetails">
+                  Number of Comments: {comment_count}{" "}
+                </p>
+                <p className="articledetails">Votes: {votes}</p>
               </Link>
             </li>
           );
