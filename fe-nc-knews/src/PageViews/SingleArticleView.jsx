@@ -125,14 +125,10 @@ class SingleArticleView extends Component {
                         disabled={this.props.userName !== author}
                         onClick={() => {
                           deleteComment(comments_id).then(res => {
-                            console.log(
-                              "this.state.allComments",
-                              this.state.allComments
-                            );
                             let filteredcomments = this.state.allComments.filter(
                               comment => comment.comments_id !== comments_id
                             );
-                            console.log(filteredcomments);
+
                             this.setState({ allComments: filteredcomments });
                             // fetchAllCommentsByArticleId(this.props.article_id);
                             // this.setState = state => {

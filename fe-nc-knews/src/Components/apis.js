@@ -103,6 +103,6 @@ export const fetchAllTopics = async () => {
   const { data, status } = await Axios.get(
     `https://longlandncknews.herokuapp.com/api/topics`
   );
-  console.log("hello im in the fetchAllTopics function", data.topics);
+
   return data.topics;
 };
