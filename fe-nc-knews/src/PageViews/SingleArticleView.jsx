@@ -125,7 +125,27 @@ class SingleArticleView extends Component {
                         disabled={this.props.userName !== author}
                         onClick={() => {
                           deleteComment(comments_id).then(res => {
-                            fetchAllCommentsByArticleId(this.props.article_id);
+                            console.log(
+                              "this.state.allComments",
+                              this.state.allComments
+                            );
+                            let filteredcomments = this.state.allComments.filter(
+                              comment => comment.comments_id !== comments_id
+                            );
+                            console.log(filteredcomments);
+                            this.setState({ allComments: filteredcomments });
+                            // fetchAllCommentsByArticleId(this.props.article_id);
+                            // this.setState = state => {
+                            //   return {
+                            //     allComments: this.state.allComments.filter(
+                            //       comment => comment.comments_id === comments_id
+                            //     )
+                            //   };
+                            //   // return {
+                            //   //   CommentVoteChange:
+                            //   //     prevState.CommentVoteChange + numberOfVotes
+                            //   // };
+                            // };
                           });
                         }}
                       >
@@ -177,38 +197,28 @@ class SingleArticleView extends Component {
 
   handleCommentsVoteClick = (numberOfVotes, comments_id) => {
     updateCommentsVotes(numberOfVotes, comments_id);
-    this.setState(prevState => {
-      return {
-        CommentVoteChange: prevState.CommentVoteChange + numberOfVotes
-      };
+    this.setState(state => {
+      // return { voteChange: state.voteChange + numberOfVotes };
+      let updatedCommentsState = state.allComments;
+      updatedCommentsState.map(comment => {
+        if (comment.comments_id === comments_id) {
+          console.log("i found the comment");
+          comment.votes = comment.votes + numberOfVotes;
+        }
+      });
+      return { allComments: updatedCommentsState };
     });
   };
-
-  // handleCommentsVoteClick = (numberOfVotes, comments_id) => {
-  //   updateCommentsVotes(numberOfVotes, comments_id);
-  //   this.setState(state => {
-  //     // return { voteChange: state.voteChange + numberOfVotes };
-  //     let updatedCommentsState = state.allComments;
-  //     updatedCommentsState.map(comment => {
-  //       if (comment.comments_id === comments_id) {
-  //         console.log("i found the comment");
-  //         comment.votes = comment.votes + numberOfVotes;
-  //       }
-  //     });
-  //     return { allComments: updatedCommentsState };
-  //   });
-  // };
 
   componentDidMount = () => {
     Promise.all([
       fetchSingleArticle(this.props.article_id),
       fetchAllCommentsByArticleId(this.props.article_id)
     ]).then(([individualArticle, allComments]) => {
-      console.log("article", individualArticle);
-      console.log("all comments", allComments);
       this.setState({ individualArticle, allComments });
     });
   };
+  componentDidUpdate() {}
 }
 
 export default SingleArticleView;
@@ -222,6 +232,15 @@ export default SingleArticleView;
 //     return {
 //       individualArticle: updatedIndividualArticle,
 //       voteChange: numberOfVotes
+//     };
+//   });
+// };
+
+// handleCommentsVoteClick = (numberOfVotes, comments_id) => {
+//   updateCommentsVotes(numberOfVotes, comments_id);
+//   this.setState(prevState => {
+//     return {
+//       CommentVoteChange: prevState.CommentVoteChange + numberOfVotes
 //     };
 //   });
 // };

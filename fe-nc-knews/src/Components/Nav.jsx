@@ -15,7 +15,11 @@ const Nav = props => {
         </button>
       </Link>
       <Link to={`/users/${props.userName}`}>
-        <button type="button" class="btn btn-secondary btn-sm">
+        <button
+          disabled={!props.loggedIn}
+          type="button"
+          class="btn btn-secondary btn-sm"
+        >
           User
         </button>
       </Link>

@@ -4,7 +4,7 @@ export const fetchAllUsers = async () => {
   const { data, status } = await Axios.get(
     `https://longlandncknews.herokuapp.com/api/users`
   );
-  console.log("hello im in the function", data.users);
+  // console.log("hello im in the function", data.users);
   return data.users;
 };
 export const fetchAllArticles = async (filterBy, sortBy) => {
@@ -12,9 +12,9 @@ export const fetchAllArticles = async (filterBy, sortBy) => {
     `https://longlandncknews.herokuapp.com/api/articles?${filterBy}${sortBy}`
   );
 
-  console.log(
-    `https://longlandncknews.herokuapp.com/api/articles?${filterBy}${sortBy}`
-  );
+  // console.log(
+  //   `https://longlandncknews.herokuapp.com/api/articles?${filterBy}${sortBy}`
+  // );
   return data.articles;
 };
 
@@ -56,7 +56,7 @@ export const postArticle = newarticle => {
 };
 
 export const postTopic = newtopic => {
-  console.log(newtopic);
+  // console.log(newtopic);
   return Axios.post(
     `https://longlandncknews.herokuapp.com/api/topics`,
     newtopic
@@ -64,7 +64,7 @@ export const postTopic = newtopic => {
 };
 
 export const postComment = (newcomment, article_id) => {
-  console.log("post", newcomment.author);
+  // console.log("post", newcomment.author);
   return Axios.post(
     `https://longlandncknews.herokuapp.com/api/articles/${article_id}/comments`,
     newcomment

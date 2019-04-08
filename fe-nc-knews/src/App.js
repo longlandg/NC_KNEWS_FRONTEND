@@ -25,10 +25,14 @@ class App extends Component {
     return (
       <div className="App">
         <h1 className="title">NC KNEWS</h1>
-        <Nav userName={this.state.userName} logOutFunc={this.logOutFunc} />
+        <Nav
+          userName={this.state.userName}
+          logOutFunc={this.logOutFunc}
+          loggedIn={this.state.loggedIn}
+        />
         <Router>
-          <HomeView path="/" />
-          <HomeView path="/:topic" />
+          <HomeView path="/" loggedIn={this.state.loggedIn} />
+          <HomeView path="/:topic" loggedIn={this.state.loggedIn} />
 
           <SignInPageView
             loggedIn={this.state.loggedIn}
