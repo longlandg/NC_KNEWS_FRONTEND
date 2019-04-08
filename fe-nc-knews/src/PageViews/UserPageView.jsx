@@ -12,8 +12,7 @@ class userPageView extends Component {
   state = {
     userInfo: "",
     userArticles: null,
-    userComments: [],
-    articleDeleted: false
+    userComments: []
   };
 
   render() {
@@ -64,9 +63,11 @@ class userPageView extends Component {
                       disabled={article.author !== this.props.userName}
                       onClick={() => {
                         deleteArticle(article_id).then(res => {
-                          fetchUserArticles(this.props.userName);
-                          console.log(article_id);
-                          navigate(`/articles/deletecomment`);
+                          let filteredarticles = this.state.userArticles.filter(
+                            articles => articles.article_id !== article_id
+                          );
+
+                          this.setState({ userArticles: filteredarticles });
                         });
                       }}
                     >
@@ -91,13 +92,30 @@ class userPageView extends Component {
     });
   };
 
-  componentDidUpdate = (_, prevState) => {
-    if (this.state !== prevState) {
-      return ([articleDeleted, userArticles]) => {
-        this.setState({ articleDeleted, userArticles });
-      };
-    }
-  };
+  componentDidUpdate = () => {};
 }
-
+// deleteComment(comments_id).then(res => {
+//   console.log(
+//     "this.state.allComments",
+//     this.state.allComments
+//   );
+//   let filteredcomments = this.state.allComments.filter(
+//     comment => comment.comments_id !== comments_id
+//   );
+//   console.log(filteredcomments);
+//   this.setState({ allComments: filteredcomments });
+// fetchAllCommentsByArticleId(this.props.article_id);
+// this.setState = state => {
+//   return {
+//     allComments: this.state.allComments.filter(
+//       comment => comment.comments_id === comments_id
+//     )
+//   };
+//   // return {
+//   //   CommentVoteChange:
+//   //     prevState.CommentVoteChange + numberOfVotes
+//   // };
+// };
+// });
+// }}
 export default userPageView;
