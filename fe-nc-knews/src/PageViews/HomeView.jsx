@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { Link } from "@reach/router";
+import SortBySelector from "../Components/SortBySelector";
 import AllArticles from "../Components/AllArticles";
 import { fetchAllArticles } from "../Components/apis";
 
@@ -15,29 +16,10 @@ class HomeView extends Component {
   render() {
     return (
       <div className="HomeView">
-        <select
-          className="sortBySelector"
-          class="browser-default custom-select"
-          onClick={this.changeSorting}
-        >
-          <option selected>Sort articles by</option>
-          <option value="sort_by=created_at&&order=desc">
-            date descending
-          </option>
-          <option value="sort_by=created_at&&order=asc">date ascending</option>
-          <option value="sort_by=comment_count&&order=desc">
-            comment count descending
-          </option>
-          <option value="sort_by=comment_count&&order=asc">
-            comment count ascending
-          </option>
-          <option value="sort_by=votes&&order=desc">
-            number of votes descending
-          </option>
-          <option value="sort_by=votes&&order=asc">
-            number of votes ascending
-          </option>
-        </select>
+        <SortBySelector
+          allArticles={this.state.allArticles}
+          changeSorting={this.changeSorting}
+        />
 
         {this.state.allArticles && (
           <div className="articlecard">
@@ -48,7 +30,6 @@ class HomeView extends Component {
     );
   }
   componentDidMount = () => {
-    console.log("this.props.path", this.props.path);
     let filterby = "";
     if (this.props.topic === undefined) {
       filterby = "";

@@ -24,26 +24,27 @@ class SingleArticleView extends Component {
           <div className="individualArticleCards">
             <h1>{this.state.individualArticle.title}</h1>
             <p className="articledetails">
-              Author:{this.state.individualArticle.author}
+              {this.state.individualArticle.author}
             </p>
-            <p className="articledetails">
+            <p className="tinytext">
+              {" "}
               Posted:{this.state.individualArticle.created_at}
             </p>
-            <p className="articledetails">
+
+            <p className="tinytext">
               Topic:{this.state.individualArticle.topic}
             </p>
             <p className="articledetails">
               {this.state.individualArticle.body}
             </p>
-            <p className="articledetails">
+            {/* <p className="articledetails">
               {this.state.individualArticle.article_id}
-            </p>
-            <p className="totalvotes">
+            </p> */}
+            <p className="tinytextblack">
               {" "}
               total votes:{" "}
               {this.state.individualArticle.votes + this.state.voteChange}
             </p>
-
             <Link to={`/${this.state.individualArticle.topic}`}>
               <button
                 className="articlesbutton"
@@ -107,11 +108,11 @@ class SingleArticleView extends Component {
                   <li key={comments_id} className="individualCommentsCards">
                     {/* <p className="tinytext">comment....</p> */}
                     <p className="articledetails">Comment: {body}</p>
-                    <p className="articledetails">Date Posted: {created_at}</p>
-                    <p className="articledetails">Author: {author}</p>
-                    <p className="articledetails"> Comment Id: {comments_id}</p>
+                    <p className="tinytext">Date Posted: {created_at}</p>
+                    <p className="tinytext">Author: {author}</p>
+                    <p className="tinytext"> Comment Id: {comments_id}</p>
 
-                    <p className="totalvotes">
+                    <p className="tinytextblack">
                       {" "}
                       total votes:
                       {comment.votes + this.state.CommentVoteChange}

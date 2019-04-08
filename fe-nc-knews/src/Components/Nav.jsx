@@ -1,6 +1,5 @@
-import React, { Component } from "react";
-import Axios from "axios";
-import { Link, navigate } from "@reach/router";
+import React from "react";
+import { Link } from "@reach/router";
 
 const Nav = props => {
   return (

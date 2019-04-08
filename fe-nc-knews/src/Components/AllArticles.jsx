@@ -26,13 +26,11 @@ class AllArticles extends Component {
               {" "}
               <Link to={`/articles/${article_id}`}>
                 <h4 className="articletitle">{title} </h4>
-                <p className="articledetails">{topic} </p>
-                <p className="articledetails">Date Posted: {created_at}</p>
-                <p className="articledetails">Author: {author} </p>
-                <p className="articledetails">
-                  Number of Comments: {comment_count}{" "}
-                </p>
-                <p className="articledetails">Votes: {votes}</p>
+                <p className="tinytext">{topic} </p>
+                <p className="tinytext">Date Posted: {created_at}</p>
+                <p className="tinytext">Author: {author} </p>
+                <p className="tinytext">Number of Comments: {comment_count} </p>
+                <p className="tinytextblack">Votes: {votes}</p>
               </Link>
             </li>
           );
@@ -40,19 +38,6 @@ class AllArticles extends Component {
       </ul>
     );
   }
-
-  // clicker = e => {
-  //   e.preventDefault();
-
-  //   Axios.get(
-  //     `https://longlandncknews.herokuapp.com/api/articles/${e.target.value}`
-  //   ).then(res => {
-  //     let individualarticle = res.data;
-  //     this.setState({ individualArticle: res.data.article }, () =>
-  //       console.log(this.state)
-  //     );
-  //   });
-  // };
 }
 
 export default AllArticles;
